@@ -2,7 +2,7 @@ import time as tm
 
 from random import randint
 from uuid import uuid4
-from typing import Tuple, Literal
+from typing import Tuple, Literal, List
 from abc import abstractmethod
 
 from pygame import *
@@ -32,9 +32,18 @@ class Text:
 
 
 class PlayerScore(Text):
-    def update_score(self, score: str | int):
-        new_text = self.source_text[:-1]
-        super().update_text(new_text + str(score))
+    score = 0
+
+    def add_score(self, score_count: int = 1) -> None:
+        self.score += score_count
+        text = self.source_text[:-1]
+        super().update_text(text + str(self.score))
+
+    def subtract_score(self, score_count: int = 1) -> None:
+        if self.score != 0:
+            self.score -= score_count
+            text = self.source_text[:-1]
+            super().update_text(text + str(self.score))
 
 
 class Sprite(sprite.Sprite):
@@ -96,14 +105,16 @@ class Player(Sprite):
         position: Tuple[int, int],
         size: Tuple[int, int],
         img: str,
+        score_counter: PlayerScore,
         speed: int = 5
     ) -> None:
         super().__init__(position, size, img, speed)
         self._count = 0
-        self.score = 0
         self._bullets = {}
         self._enemies = {}
-        self._spawn_time = tm.time()
+        self.score_counter = score_counter
+        self._spawn_time_bullet = tm.time()
+        self._spawn_time_enemy = tm.time()
         self.data = {
             'x': self.rect.x,
             'y': self.rect.y,
@@ -130,25 +141,25 @@ class Player(Sprite):
         if keys[K_SPACE]:
             current_time = tm.time()
 
-            if current_time - self._spawn_time >= 0.3:
+            if current_time - self._spawn_time_bullet >= 0.3:
                 bullet_id = str(uuid4())
                 self._bullets[bullet_id] = {
                     'x': self.rect.x,
-                    'y': self.rect.y + 10
+                    'y': self.rect.y + 15
                 }
-                self._spawn_time = current_time
+                self._spawn_time_bullet = current_time
 
     def create_enemy(self) -> None:
-        self._count += 1
+        current_time = tm.time()
 
-        if self._count >= 20:
+        if current_time - self._spawn_time_enemy >= 1:
             x, y = randint(50, 620), randint(0, 30)
             enemy_id = str(uuid4())
             self._enemies[enemy_id] = {
                 'x': x,
                 'y': y
             }
-            self._count = 0
+            self._spawn_time_enemy = current_time
 
     def draw(self, window: Surface) -> None:
         window.blit(source=self.image, dest=(self.rect.x, self.rect.y))
@@ -163,6 +174,16 @@ class Enemy(Sprite):
         speed: int = 2
     ):
         super().__init__(position, size, img, speed)
+
+    def check_rect_collision(
+        self,
+        players: List[Player],
+        enemies: List['Enemy']
+    ) -> None:
+        for player in players:
+            if self.rect.colliderect(player.rect):
+                player.score_counter.subtract_score()
+                enemies.remove(self)
 
     def move(self) -> None:
         self.rect.y += self.speed

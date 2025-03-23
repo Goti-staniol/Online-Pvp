@@ -1,5 +1,12 @@
-from core.game import run_game
+import sys
+
+from PyQt5.QtWidgets import QApplication
+
+from core.objects.menu_objects import MainWindow
 
 
 if __name__ == '__main__':
-    run_game()
+    app = QApplication(sys.argv)
+    window = MainWindow()
+    window.show()
+    app.exec_()

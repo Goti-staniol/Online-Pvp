@@ -1,0 +1,113 @@
+QWidget {
+    background-color: #2b2b2b;
+}
+
+QWidget#SettingsMenu {
+    border-radius: 10px;
+    border: 1px solid #3b3b3b;
+}
+
+QLabel {
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+QLabel#title_label {
+    color: #8577ef;
+    font-size: 28px;
+    font-weight: bold;
+    border-bottom: 2px solid #3b3b3b;
+    padding-bottom: 10px;
+}
+
+QLineEdit {
+    background-color: #3b3b3b;
+    border: 2px solid #4b4b4b;
+    border-radius: 5px;
+    padding: 10px;
+    color: #ffffff;
+    font-size: 16px;
+    font-family: 'Consolas', monospace;
+    selection-color: #ffffff;
+    selection-background-color: #6c5ce7;
+    min-width: 200px;
+}
+
+QLineEdit:focus {
+    border: 2px solid #6c5ce7;
+    background-color: #404040;
+}
+
+QLineEdit::placeholder {
+    color: #888888;
+    font-style: italic;
+}
+
+QPushButton {
+    background-color: #6c5ce7;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+QPushButton:hover {
+    background-color: #8577ef;
+}
+
+QPushButton:pressed {
+    background-color: #5d4ec7;
+}
+
+QPushButton#default_btn {
+    background-color: #444444;
+}
+
+QPushButton#default_btn:hover {
+    background-color: #555555;
+}
+
+QPushButton#default_btn:pressed {
+    background-color: #333333;
+}
+
+QTextEdit {
+    background-color: black;
+    color: white;
+    font-family: Consolas, monospace;
+    border: 2px solid #3A3A3A;
+    border-radius: 12px;
+    padding: 15px;
+    font-size: 14px;
+    selection-background-color: #6C5CE7;
+    selection-color: white;
+}
+
+QScrollBar:vertical,
+QScrollBar:horizontal {
+    width: 0px;
+    height: 0px;
+    background: transparent;
+}
+
+QScrollBar::add-page,
+QScrollBar::sub-page {
+    background: none;
+}
+
+QTextEdit:hover {
+    border: 2px solid #4A4A4A;
+}
+
+QTextEdit:focus {
+    border: 2px solid #6C5CE7;
+}
+
+QTextEdit QTextCursor {
+    border-width: 2px;
+    border-style: solid;
+    background-color: rgba(108, 92, 231, 0.2);
+} 

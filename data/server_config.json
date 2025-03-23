@@ -1,0 +1,12 @@
+{
+    "server": {
+        "ip": "localdevice",
+        "port": 1313,
+        "warnings": {
+            "local_device_warning": "WARNING: If you are using a local device, be aware that other users may damage it. If your incoming network requests are not properly configured, your device may be exposed to unauthorized access or attacks.\n"
+        },
+        "errors": {
+            "invalid_data": "ERROR: Failed to resolve the host name or service not found.\n"
+        }
+    }
+}
